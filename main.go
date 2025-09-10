@@ -24,8 +24,8 @@ func main() {
 	// 定义工具列表
 	tools := []Tool{
 		{
-			Name:        "端口扫描",
-			Description: "扫描目标主机的开放端口",
+			Name:        "端口扫xxxxxxxxxxxxxxxxxx描",
+			Description: "扫描目标主机的xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx开放端口",
 			Action: func(w fyne.Window) {
 				dialog.ShowInformation("端口扫描", "端口扫描功能启动", w)
 			},
@@ -153,10 +153,6 @@ func main() {
 		grid.Add(card)
 	}
 
-	// 创建顶部标题
-	title := widget.NewLabel("黑客工具箱")
-	title.TextStyle = fyne.TextStyle{Bold: true}
-	title.Alignment = fyne.TextAlignCenter
 
 	// 创建滚动容器
 	scrollContainer := container.NewVScroll(grid)
@@ -164,7 +160,7 @@ func main() {
 
 	// 创建主容器
 	content := container.NewBorder(
-		container.NewVBox(title, widget.NewSeparator()),
+		container.NewVBox( widget.NewSeparator()),
 				       nil, nil, nil,
 				       scrollContainer,
 	)
@@ -173,12 +169,25 @@ func main() {
 	myWindow.ShowAndRun()
 }
 
-// createToolCard 创建工具卡片
+// createToolCard 创建工具卡片，支持文字自动换行
 func createToolCard(tool Tool, parentWindow fyne.Window) fyne.CanvasObject {
+	// 创建支持自动换行的标题标签
+	titleLabel := widget.NewLabel(tool.Name)
+	titleLabel.TextStyle = fyne.TextStyle{Bold: true} // 保持标题粗体样式
+
+	// 创建支持自动换行的描述标签
+	descLabel := widget.NewLabel(tool.Description)
+	descLabel.Wrapping = fyne.TextWrapWord // 设置按单词换行
+
+	// 将标签放入容器作为卡片内容
+	content := container.NewVBox(
+		titleLabel,
+		descLabel,
+	)
+
 	card := widget.NewCard(
-		tool.Name,
-		tool.Description,
-		nil,
+		"", "", // 清空默认标题和描述
+		content,
 	)
 
 	button := widget.NewButton("启动", func() {

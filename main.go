@@ -1,191 +1,193 @@
 package main
 
 import (
-    "fmt"
-    "fyne.io/fyne/v2"
-    "fyne.io/fyne/v2/app"
-    "fyne.io/fyne/v2/container"
-    "fyne.io/fyne/v2/dialog"
-    "fyne.io/fyne/v2/layout"
-    "fyne.io/fyne/v2/theme"
-    "fyne.io/fyne/v2/widget"
-    "os/exec"
-    "runtime"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
 )
 
 // Tool 定义工具箱中的工具
 type Tool struct {
-    Name        string
-    Description string
-    Icon        fyne.Resource
-    Action      func()
+	Name        string
+	Description string
+	Action      func(w fyne.Window)
 }
 
 func main() {
-    myApp := app.New()
-    myWindow := myApp.NewWindow("黑客工具箱")
-    myWindow.Resize(fyne.NewSize(800, 600))
+	myApp := app.New()
+	myWindow := myApp.NewWindow("黑客工具箱")
+	myWindow.Resize(fyne.NewSize(800, 600))
 
-    // 定义工具列表
-    tools := []Tool{
-        {
-            Name:        "端口扫描",
-            Description: "扫描目标主机的开放端口",
-            Icon:        theme.ViewRefreshIcon(),
-            Action:      portScan,
-        },
-        {
-            Name:        "子域名发现",
-            Description: "查找目标域名的所有子域名",
-            Icon:        theme.SearchIcon(),
-            Action:      subdomainFinder,
-        },
-        {
-            Name:        "WHOIS 查询",
-            Description: "查询域名的注册信息",
-            Icon:        theme.InfoIcon(),
-            Action:      whoisLookup,
-        },
-        {
-            Name:        "Ping 检测",
-            Description: "检测主机是否在线",
-            Icon:        theme.ConfirmIcon(),
-            Action:      pingCheck,
-        },
-        {
-            Name:        "哈希计算",
-            Description: "计算文本的多种哈希值",
-            Icon:        theme.DocumentIcon(),
-            Action:      hashCalculator,
-        },
-        {
-            Name:        "Base64 编码/解码",
-            Description: "Base64 编码和解码工具",
-            Icon:        theme.ContentCopyIcon(),
-            Action:      base64Tool,
-        },
-        {
-            Name:        "HTTP Header 分析",
-            Description: "分析网站的HTTP头部信息",
-            Icon:        theme.ListIcon(),
-            Action:      httpHeaderAnalyzer,
-        },
-        {
-            Name:        "密码生成器",
-            Description: "生成强密码",
-            Icon:        theme.ViewRefreshIcon(),
-            Action:      passwordGenerator,
-        },
-    }
+	// 定义工具列表
+	tools := []Tool{
+		{
+			Name:        "端口扫描",
+			Description: "扫描目标主机的开放端口",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("端口扫描", "端口扫描功能启动", w)
+			},
+		},
+		{
+			Name:        "子域名发现",
+			Description: "查找目标域名的所有子域名",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("子域名发现", "子域名发现功能启动", w)
+			},
+		},
+		{
+			Name:        "WHOIS 查询",
+			Description: "查询域名的注册信息",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("WHOIS 查询", "WHOIS 查询功能启动", w)
+			},
+		},
+		{
+			Name:        "漏洞扫描",
+			Description: "扫描目标系统的安全漏洞",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("漏洞扫描", "漏洞扫描功能启动", w)
+			},
+		},
+		{
+			Name:        "密码破解",
+			Description: "尝试破解加密的密码",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("密码破解", "密码破解功能启动", w)
+			},
+		},
+		{
+			Name:        "网络嗅探",
+			Description: "捕获和分析网络流量",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("网络嗅探", "网络嗅探功能启动", w)
+			},
+		},
+		{
+			Name:        "SQL注入检测",
+			Description: "检测Web应用的SQL注入漏洞",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("SQL注入检测", "SQL注入检测功能启动", w)
+			},
+		},
+		{
+			Name:        "XSS检测",
+			Description: "检测Web应用的跨站脚本漏洞",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("XSS检测", "XSS检测功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+		{
+			Name:        "目录遍历",
+			Description: "尝试发现Web服务器的隐藏目录",
+			Action: func(w fyne.Window) {
+				dialog.ShowInformation("目录遍历", "目录遍历功能启动", w)
+			},
+		},
+	}
 
-    // 创建网格布局
-    grid := container.New(layout.NewGridLayout(3))
-    
-    // 为每个工具创建卡片
-    for _, tool := range tools {
-        card := createToolCard(tool)
-        grid.Add(card)
-    }
+	// 创建网格布局
+	grid := container.New(layout.NewGridLayout(3))
 
-    // 创建顶部标题
-    title := widget.NewLabel("黑客工具箱")
-    title.TextStyle = fyne.TextStyle{Bold: true}
-    title.Alignment = fyne.TextAlignCenter
-    
-    // 创建主容器
-    content := container.NewBorder(
-        container.NewVBox(title, widget.NewSeparator()), 
-        nil, nil, nil, 
-        grid,
-    )
+	// 为每个工具创建卡片
+	for _, tool := range tools {
+		card := createToolCard(tool, myWindow)
+		grid.Add(card)
+	}
 
-    myWindow.SetContent(content)
-    myWindow.ShowAndRun()
+	// 创建顶部标题
+	title := widget.NewLabel("黑客工具箱")
+	title.TextStyle = fyne.TextStyle{Bold: true}
+	title.Alignment = fyne.TextAlignCenter
+
+	// 创建滚动容器
+	scrollContainer := container.NewVScroll(grid)
+	scrollContainer.SetMinSize(fyne.NewSize(780, 500))
+
+	// 创建主容器
+	content := container.NewBorder(
+		container.NewVBox(title, widget.NewSeparator()),
+				       nil, nil, nil,
+				       scrollContainer,
+	)
+
+	myWindow.SetContent(content)
+	myWindow.ShowAndRun()
 }
 
 // createToolCard 创建工具卡片
-func createToolCard(tool Tool) fyne.CanvasObject {
-    card := widget.NewCard(
-        tool.Name,
-        tool.Description,
-        nil,
-    )
-    
-    button := widget.NewButtonWithIcon("启动", tool.Icon, tool.Action)
-    
-    return container.NewVBox(
-        card,
-        layout.NewSpacer(),
-        button,
-    )
-}
+func createToolCard(tool Tool, parentWindow fyne.Window) fyne.CanvasObject {
+	card := widget.NewCard(
+		tool.Name,
+		tool.Description,
+		nil,
+	)
 
-// 以下是工具函数的实现（示例实现）
+	button := widget.NewButton("启动", func() {
+		tool.Action(parentWindow)
+	})
 
-func portScan() {
-    showDialog("端口扫描", "端口扫描功能启动\n请输入要扫描的目标IP或域名")
-    // 实际实现会包含更多逻辑，如输入框、扫描按钮等
-}
-
-func subdomainFinder() {
-    showDialog("子域名发现", "子域名发现功能启动")
-}
-
-func whoisLookup() {
-    showDialog("WHOIS 查询", "WHOIS 查询功能启动")
-}
-
-func pingCheck() {
-    showDialog("Ping 检测", "Ping 检测功能启动")
-}
-
-func hashCalculator() {
-    showDialog("哈希计算", "哈希计算功能启动")
-}
-
-func base64Tool() {
-    showDialog("Base64 工具", "Base64 编码/解码功能启动")
-}
-
-func httpHeaderAnalyzer() {
-    showDialog("HTTP Header 分析", "HTTP Header 分析功能启动")
-}
-
-func passwordGenerator() {
-    showDialog("密码生成器", "密码生成器功能启动")
-}
-
-// showDialog 显示信息对话框
-func showDialog(title, message string) {
-    a := app.New()
-    w := a.NewWindow(title)
-    w.Resize(fyne.NewSize(300, 200))
-    
-    dialog.ShowInformation(title, message, w)
-    
-    // 在对话框显示后运行应用
-    go func() {
-        w.Show()
-        a.Run()
-    }()
-}
-
-// openBrowser 打开系统浏览器（辅助函数）
-func openBrowser(url string) {
-    var err error
-    
-    switch runtime.GOOS {
-    case "linux":
-        err = exec.Command("xdg-open", url).Start()
-    case "windows":
-        err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
-    case "darwin":
-        err = exec.Command("open", url).Start()
-    default:
-        err = fmt.Errorf("unsupported platform")
-    }
-    
-    if err != nil {
-        fmt.Println("无法打开浏览器:", err)
-    }
+	return container.NewVBox(
+		card,
+		layout.NewSpacer(),
+				 button,
+	)
 }
